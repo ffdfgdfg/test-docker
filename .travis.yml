@@ -1,0 +1,23 @@
+language: go
+
+go:
+  - "1.13"
+  - master
+services:
+  - docker
+script:
+  - GOPROXY=direct
+os:
+  - linux
+before_deploy:
+  - chmod +x ./build.sh && ./build.sh
+
+deploy:
+  provider: releases
+  edge: true
+  token: ${GH_TOKEN}
+  cleanup: false
+  file:
+  on:
+    tags: true
+    all_branches: true
